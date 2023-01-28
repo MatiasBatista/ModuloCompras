@@ -18,9 +18,12 @@ db.init_app(app)
 
 
 @app.route('/')
-def hello_world():  # put application's code here
+def inicio():
     return render_template("index.html")
 
+@app.route('/redireccionarAltaContrato')
+def altasContrato():
+    return render_template("altaContrato.html") # Investigar por que funciona asi
 
 @app.route('/altaContrato',methods = ['POST'])
 @cross_origin()

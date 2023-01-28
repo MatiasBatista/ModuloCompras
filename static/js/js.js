@@ -1,9 +1,9 @@
 
 function cambiarPagAlta(){
-  window.location.href = "altaContrato.html"
+  window.location.href = "http://localhost:5000/redireccionarAltaContrato"
 }
 function volverMenu(){
-  window.location.href = "index.html"
+  window.location.href = "http://localhost:5000/"
 }
 
 function mostrarNombreCereales(){
@@ -99,51 +99,44 @@ function mostrarNombresIndicadores(){
 }
 
 
-function mostrar(){
-  console.log(document.getElementById("asd"))
-}
-
-function mostrarSelect(){
-  console.log(document.getElementById("proveedores"))
-  console.log(document.getElementById("proveedores").textContent)
-}
-
 function agregarIndicadoresALista(){
-    tbody=document.getElementById('tablaIndicadoresCalidad')
-    tr=document.createElement('tr')
-    td1=document.createElement('td')
-    td1.scope="row"
-    td1.textContent=document.getElementById('indicadores').value
-    tr.appendChild(td1)
-    td2=document.createElement('td')
-    td2.scope="row"
-    td2.textContent=document.getElementById('valorDesdeIndicador').value
-    tr.appendChild(td2)
-    td3=document.createElement('td')
-    td3.scope="row"
-    td3.textContent=document.getElementById('valorHastaIndicador').value
-    tr.appendChild(td3)
-    tbody.appendChild(tr)
+  nomIndicador=document.getElementById('indicadores').value
+  valDesde=document.getElementById('valorDesdeIndicador').value
+  valHasta=document.getElementById('valorHastaIndicador').value
+    if(nomIndicador!='' && valDesde!='' && valHasta!='' ){
+      tbody=document.getElementById('tablaIndicadoresCalidad')
+      tr=document.createElement('tr')
+      td1=document.createElement('td')
+      td1.scope="row"
+      td1.textContent=document.getElementById('indicadores').value
+      tr.appendChild(td1)
+      td2=document.createElement('td')
+      td2.scope="row"
+      td2.textContent=document.getElementById('valorDesdeIndicador').value
+      tr.appendChild(td2)
+      td3=document.createElement('td')
+      td3.scope="row"
+      td3.textContent=document.getElementById('valorHastaIndicador').value
+      tr.appendChild(td3)
+      tbody.appendChild(tr)
+    }
+    else{
+      alert("Debe ingresar todos los campos")
+    }
   
 }
 
 function busquedaProveedor(){
-  input=document.getElementById("inputProveedor").value.toUpperCase()
-  console.log(input)
-  tabla=document.getElementById("myTabla").lastChild
-  console.log(tabla)
+  input=document.getElementById("inputProveedor").value.toUpperCase().replace(/\s+/g, '')
+  tabla=document.getElementById("tablaContratos").lastChild
   for (i=0;i<tabla.childElementCount;i++){
     tr=tabla.childNodes[i]
-    console.log(tr)
-    td=tr.childNodes[4].textContent.toUpperCase()
-    console.log(td)
-    console.log(input)
-    console.log(td.substring(0,input.length))
-    if (td.substring(0,input.length) != input){
-      tr.style.display="none";
+    td=tr.childNodes[4].textContent.toUpperCase().replace(/\s+/g, '')
+    if (td.includes(input)){
+      tr.style.display="table-row";
     }
     else{
-      tr.style.display="table-row"
+      tr.style.display="none"
     }
     
   }
@@ -153,22 +146,16 @@ function busquedaProveedor(){
 
 
 function busquedaCereal(){
-  input=document.getElementById("inputCereal").value.toUpperCase()
-  console.log(input)
-  tabla=document.getElementById("myTabla").lastChild
-  console.log(tabla)
+  input=document.getElementById("inputCereal").value.toUpperCase().replace(/\s+/g, '')
+  tabla=document.getElementById("tablaContratos").lastChild
   for (i=0;i<tabla.childElementCount;i++){
     tr=tabla.childNodes[i]
-    console.log(tr)
-    td=tr.childNodes[3].textContent.toUpperCase()
-    console.log(td)
-    console.log(input)
-    console.log(td.substring(0,input.length))
-    if (td.substring(0,input.length) != input){
-      tr.style.display="none";
+    td=tr.childNodes[3].textContent.toUpperCase().replace(/\s+/g, '')
+    if (td.includes(input)){
+      tr.style.display="table-row";
     }
     else{
-      tr.style.display="table-row"
+      tr.style.display="none"
     }
     
   }
@@ -176,22 +163,16 @@ function busquedaCereal(){
 }
 
 function busquedaEncargadoDeCompras(){
-  input=document.getElementById("inputEncargadoDeCompras").value.toUpperCase()
-  console.log(input)
-  tabla=document.getElementById("myTabla").lastChild
-  console.log(tabla)
+  input=document.getElementById("inputEncargadoDeCompras").value.toUpperCase().replace(/\s+/g, '')
+  tabla=document.getElementById("tablaContratos").lastChild
   for (i=0;i<tabla.childElementCount;i++){
     tr=tabla.childNodes[i]
-    console.log(tr)
-    td=tr.childNodes[5].textContent.toUpperCase()
-    console.log(td)
-    console.log(input)
-    console.log(td.substring(0,input.length))
-    if (td.substring(0,input.length) != input){
-      tr.style.display="none";
+    td=tr.childNodes[5].textContent.toUpperCase().replace(/\s+/g, '')
+    if (td.includes(input)){
+      tr.style.display="table-row"
     }
     else{
-      tr.style.display="table-row"
+      tr.style.display="none"
     }
     
   }
@@ -200,18 +181,12 @@ function busquedaEncargadoDeCompras(){
 
 function busquedaNumeroContrato(){
   input=document.getElementById("inputNumeroContrato").value.toUpperCase()
-  console.log(input)
-  tabla=document.getElementById("myTabla").lastChild
-  console.log(tabla)
+  tabla=document.getElementById("tablaContratos").lastChild
   for (i=0;i<tabla.childElementCount;i++){
     tr=tabla.childNodes[i]
-    console.log(tr)
     td=tr.childNodes[1].textContent.toUpperCase()
-    console.log(td)
-    console.log(input)
-    console.log(td)
-    if (td != input){
-      tr.style.display="none";
+    if (td.substring(0,input.length)!=input){
+      tr.style.display="none"
     }
     else{
       tr.style.display="table-row"
@@ -236,53 +211,72 @@ function altaContrato(){
   proveedor=document.getElementById('proveedores').value
   encargadoCompra=document.getElementById('encargadosDeCompra').value
   contadorTr=document.getElementById("tablaIndicadoresCalidad").childNodes.length
-  arregloValoresIndicadorCalidad={}
+ 
+  if(numero!='' && fechaInicio!='' && fechaFin!='' && cereal!='' && cantTonelada!='' && precioPorTonelada!='' && cantCamiones!='' && proveedor!='' && encargadoCompra!=''){
+    if (contadorTr>=3){
+      if(fechaFin>fechaInicio){
+        alert("Esta todo ok")
+        arregloValoresIndicadorCalidad={}
+      for(i=1;i<contadorTr;i++){
+        td=document.getElementById("tablaIndicadoresCalidad").childNodes[i]
+        nombre=td.childNodes[0].textContent
+        valorDesde=td.childNodes[1].textContent
+        valorHasta=td.childNodes[2].textContent
+        var valorIndicadorContrato={
+          nombreIndicadorCalidad: nombre,
+          valorDesde:valorDesde,
+          valorHasta:valorHasta
+        }
+        arregloValoresIndicadorCalidad[i]=valorIndicadorContrato
+      }
+      
+      var contrato={
 
-  
-  for(i=1;i<contadorTr;i++){
-    td=document.getElementById("tablaIndicadoresCalidad").childNodes[i]
-    nombre=td.childNodes[0].textContent
-    valorDesde=td.childNodes[1].textContent
-    valorHasta=td.childNodes[2].textContent
-    var valorIndicadorContrato={
-      nombreIndicadorCalidad: nombre,
-      valorDesde:valorDesde,
-      valorHasta:valorHasta
+        "numero":numero,
+        "cantidadDeToneladas":cantTonelada,
+        "precioPorTonelada":precioPorTonelada,
+        "cantidadDeCamiones":cantCamiones,
+        "fechaInicio":fechaInicio,
+        "fechaFin":fechaFin,
+        "nombreCereal":cereal,
+        "nombreProveedor":proveedor,
+        "legajoEncargado":encargadoCompra
+      }
+
+      contrato['arregloValoresIndicadorCalidad']=arregloValoresIndicadorCalidad
+
+      fetch("http://localhost:5000/altaContrato", {
+            method: 'POST',
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify (contrato)
+          })
+          .then(function(response) {
+            return response.json();})
+          .then(function(data) {
+            alert(data['mensaje'])
+            
+        })
+        .catch(function(err) {
+            console.error(err);
+        });
+
     }
-    arregloValoresIndicadorCalidad[i]=valorIndicadorContrato
+    else{
+      alert("La fecha final debe ser posterior a la fecha inicial")
+    }
+
+    }
+    else{
+      alert("Debe ingresar por lo menos 3 indicadores de calidad")
+    }
+    
+    
+    }
+  else{
+    alert("Asegurese de colocar todos los datos")
   }
-  console.log(arregloValoresIndicadorCalidad)
-  var contrato={
-
-    "numero":numero,
-    "cantidadDeToneladas":cantTonelada,
-    "precioPorTonelada":precioPorTonelada,
-    "cantidadDeCamiones":cantCamiones,
-    "fechaInicio":fechaInicio,
-    "fechaFin":fechaFin,
-    "nombreCereal":cereal,
-    "nombreProveedor":proveedor,
-    "legajoEncargado":encargadoCompra
-  }
-
-  contrato['arregloValoresIndicadorCalidad']=arregloValoresIndicadorCalidad
-
-  fetch("http://localhost:5000/altaContrato", {
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify (contrato)
-      })
-      .then(function(response) {
-        return response.json();})
-      .then(function(data) {
-        alert(data['mensaje'])
-        
-    })
-    .catch(function(err) {
-        console.error(err);
-    });
 
   
     
@@ -305,7 +299,6 @@ function devolverContratos(){
         return response.json();})
       .then(function(data) {
         cantidadKeysObjeto=Object.keys(data).length
-        console.log(cantidadKeysObjeto)
           var html="<thead class='thead-dark'>"
                 html+="<tr>"
                 html+="<td scope='col'>ID</td>"
@@ -314,6 +307,8 @@ function devolverContratos(){
                 html+="<td scope='col'>CEREAL</td>"
                 html+="<td scope='col'>PROVEEDOR</td>"
                 html+="<td scope='col'>ENCARGADO DE COMPRAS</td>"
+                html+="<td scope='col'></td>"
+                html+="<td scope='col'></td>"
                 html+="</tr>"
                 html+="</thead>"
                 html+="<tbody>"
@@ -336,7 +331,7 @@ function devolverContratos(){
                 html+="</tr>"
           }
           html+="</tbody>"
-          document.getElementById("myTabla").innerHTML=html
+          document.getElementById("tablaContratos").innerHTML=html
     })
     .catch(function(err) {
         console.error(err);
