@@ -131,7 +131,7 @@ function busquedaProveedor(){
   tabla=document.getElementById("tablaContratos").lastChild
   for (i=0;i<tabla.childElementCount;i++){
     tr=tabla.childNodes[i]
-    td=tr.childNodes[4].textContent.toUpperCase().replace(/\s+/g, '')
+    td=tr.childNodes[5].textContent.toUpperCase().replace(/\s+/g, '')
     if (td.includes(input)){
       tr.style.display="table-row";
     }
@@ -150,7 +150,7 @@ function busquedaCereal(){
   tabla=document.getElementById("tablaContratos").lastChild
   for (i=0;i<tabla.childElementCount;i++){
     tr=tabla.childNodes[i]
-    td=tr.childNodes[3].textContent.toUpperCase().replace(/\s+/g, '')
+    td=tr.childNodes[4].textContent.toUpperCase().replace(/\s+/g, '')
     if (td.includes(input)){
       tr.style.display="table-row";
     }
@@ -167,7 +167,7 @@ function busquedaEncargadoDeCompras(){
   tabla=document.getElementById("tablaContratos").lastChild
   for (i=0;i<tabla.childElementCount;i++){
     tr=tabla.childNodes[i]
-    td=tr.childNodes[5].textContent.toUpperCase().replace(/\s+/g, '')
+    td=tr.childNodes[6].textContent.toUpperCase().replace(/\s+/g, '')
     if (td.includes(input)){
       tr.style.display="table-row"
     }
@@ -199,6 +199,25 @@ function busquedaNumeroContrato(){
 
 }
 
+function busquedaEstado(){
+  input=document.getElementById("inputEstado").value.toUpperCase()
+  tabla=document.getElementById("tablaContratos").lastChild
+  for (i=0;i<tabla.childElementCount;i++){
+    tr=tabla.childNodes[i]
+    td=tr.childNodes[2].textContent.toUpperCase()
+    if (td.substring(0,input.length)!=input){
+      tr.style.display="none"
+    }
+    else{
+      tr.style.display="table-row"
+    }
+    if (input.length==0){
+      tr.style.display="table-row"
+    }
+
+  }
+
+}
 
 function altaContrato(){
   numero=document.getElementById('numeroContrato').value
@@ -303,6 +322,7 @@ function devolverContratos(){
                 html+="<tr>"
                 html+="<td scope='col'>ID</td>"
                 html+="<td scope='col'>NUMERO</td>"
+                html+="<td scope='col'>ESTADO</td>"
                 html+="<td scope='col'>CANTIDAD TONELADAS</td>"
                 html+="<td scope='col'>CEREAL</td>"
                 html+="<td scope='col'>PROVEEDOR</td>"
@@ -319,9 +339,11 @@ function devolverContratos(){
                 var nombreCereal=data[i]['nombreCereal']
                 var proveedor=data[i]['razonSocialProveedor']
                 var encargadoDeCompras=data[i]['nombreEncargadoDeCompras']
+                var estado=data[i]['estado']
                 html+="<tr>"
                 html+="<td scope='row'>" + id + "</td>"
-                html+="<td scope='row'>" + numero+ "</td>"
+                html+="<td scope='row' >" + numero+ "</td>"
+                html+="<td scope='row'>" + estado+ "</td>"
                 html+="<td scope='row'>" + cantidadToneladas + "</td>"
                 html+="<td scope='row'>" + nombreCereal.toUpperCase() + "</td>"
                 html+="<td scope='row'>" + proveedor.toUpperCase() + "</td>"

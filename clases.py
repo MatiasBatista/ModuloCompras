@@ -9,20 +9,18 @@ class Proveedor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     razonSocial = db.Column(db.String(200), nullable=False, unique=True)
     cuit = db.Column(db.String(12), nullable=False, unique=True)
-
     def __init__(self,razonSocial,cuit):
         self.razonSocial=razonSocial
         self.cuit=cuit
-
     def serializarADiccionario(self):
         return {"razonSocial": self.razonSocial
                 }
-
     def getId(self):
         return self.id
-
     def getRazonSocial(self):
         return self.razonSocial
+
+
 
 class TipoCereal(db.Model):
     __tablename__="tipocereal"
@@ -39,11 +37,11 @@ class Cereal(db.Model):
     def serializarADiccionario(self):
         return {"nombre": self.nombre
                 }
-
     def getId(self):
         return self.id
     def getNombre(self):
         return self.nombre
+
 
 class EncargadoDeCompras(db.Model):
     __tablename__ = "encargadodecompras"
@@ -51,7 +49,6 @@ class EncargadoDeCompras(db.Model):
     legajo = db.Column(db.Integer,nullable=False,unique=True)
     nombre = db.Column(db.String(200),nullable=False)
     apellido = db.Column(db.String(200),nullable=False)
-
     def serializarADiccionario(self):
         return {
                 "legajo": self.legajo
@@ -69,6 +66,7 @@ class Contrato(db.Model):
     cantidadDeCamiones=db.Column(db.Integer,nullable=False)
     fechaInicio=db.Column(db.Date,nullable=False)
     fechaFin=db.Column(db.Date,nullable=False)
+    estado=db.Column(db.String(20),nullable=False)
     arregloValoresIndicadorCalidad=db.relationship('ValorIndicadorCalidadContrato')
     idCereal = db.Column(db.Integer, db.ForeignKey('cereal.id'))
     idProveedor = db.Column(db.Integer, db.ForeignKey('proveedor.id'))
@@ -81,6 +79,7 @@ class Contrato(db.Model):
         self.cantidadDeCamiones=cantidadDeCamiones
         self.fechaInicio=fechaInicio
         self.fechaFin=fechaFin
+        self.estado="Inicializado"
         self.idCereal=idCereal
         self.idProveedor=idProveedor
         self.idEncargadoDeCompras=idEncargadoDeCompras
@@ -96,6 +95,7 @@ class Contrato(db.Model):
                 "cantidadDeCamiones":self.cantidadDeCamiones,
                 "fechaInicio":self.fechaInicio,
                 "fechaFin":self.fechaFin,
+                "estado":self.estado,
                 "nombreCereal":cereal.getNombre(),
                 "razonSocialProveedor":prove.getRazonSocial(),
                 "nombreEncargadoDeCompras":encargado.nombre +" "+ encargado.apellido}
